@@ -350,12 +350,16 @@ function imageToSize(str, size, border){
     return div.innerHTML;
 }    
 
-//get the text out of HTML string
-function textHTML(str){
+//get the text out of HTML string and return first n words
+function textHTML(str, count){
     var div = document.createElement("div");
     div.innerHTML = str;
     var text = div.textContent || div.innerText || "";
-    return text;
+    var words = text.split(/\s+/);
+    if (count < words.length)
+        return words.slice(0,count).join(" ") + "...";
+    else
+        return text ;
 }
 
 /**

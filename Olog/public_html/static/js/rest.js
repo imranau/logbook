@@ -276,13 +276,9 @@ function showLog(log, id){
 	globalLogId = id;
 	log_desc = log.description;
 
-    //escape the text for any html elements entered
-	//$("#log_description").text(escapeHTML(desc));
-	$("#log_description").text(log_desc);
-	setMarkdown("log_description");
-	//$("#log_description").attr("rows", lines.length);
-
-
+	if (!CKEDITOR.instances.log_description) CKEDITOR.replace("log_description", {toolbar: [], allowedContent: true, height: '50vh'});
+	CKEDITOR.instances.log_description.setData(log_desc);
+	
 	$("#log_owner").html(log.owner);
 	$("#log_date").html(formatDate(log.modifiedDate));
 	$("#log_date").html(formatDate(log.modifiedDate));
@@ -577,7 +573,7 @@ function prepareParentAndChildren(i, children, prepend, logOwners) {
 
 	// Build customized Log object
 	var newItem = {
-		description: textHTML(returnFirstXWords(item.description, 40)),
+		description: textHTML(item.description, 20),
 		owner: originalOwner,
 		modifiedOwner: item.owner,
 		createdDate: formatDate(item.createdDate),
